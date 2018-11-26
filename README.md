@@ -13,7 +13,7 @@ Because I needed this for my personal project
 
 ## How do I use this?
 
-Either copy the [CSAES-CTR.cs](src/CSAES-CTR.cs) to your project or use upcoming nuget package 
+Either copy the [CSAES-CTR.cs](src/CSAES-CTR.cs) to your project or use [LibAES-CTR](https://www.nuget.org/packages/LibAES-CTR/) nuget package
 
 Then do code like
 ```csharp
