@@ -4,7 +4,7 @@
 
 ## Build status
 
-Coming later
+[![Build Status](https://travis-ci.com/mcraiha/CSharp-AES-CTR-NetStandard.svg?branch=master)](https://travis-ci.com/mcraiha/CSharp-AES-CTR-NetStandard)
 
 ## Why?
 
