@@ -38,6 +38,11 @@ namespace CS_AES_CTR
 		private readonly ICryptoTransform counterEncryptor;
 
 		/// <summary>
+		/// Determines if the objects in this class have been disposed of. Set to true by the Dispose() method.
+		/// </summary>
+		private bool isDisposed;
+
+		/// <summary>
 		/// AES_CTR constructor
 		/// </summary>
 		/// <param name="key">Key as byte array</param>
@@ -63,6 +68,8 @@ namespace CS_AES_CTR
 			{
 				throw new ArgumentException($"Initial counter must be {allowedCounterLength} bytes");
 			}
+
+			this.isDisposed = false;
 
 			SymmetricAlgorithm aes = new AesManaged { Mode = CipherMode.ECB, Padding = PaddingMode.None };
 			
@@ -235,6 +242,12 @@ namespace CS_AES_CTR
 				throw new ArgumentOutOfRangeException("output", $"Output byte array should be able to take at least {numBytes}");
 			}
 
+			if (isDisposed) 
+			{
+				throw new ObjectDisposedException("state", "AES_CTR has already been disposed");
+			}
+
+
 			int outputOffset = 0;
 			int inputOffset = 0;
 
@@ -273,5 +286,61 @@ namespace CS_AES_CTR
 				inputOffset += processBytesAtTime;
 			}
 		}
+
+
+		#region Destructor and Disposer
+
+		/// <summary>
+		/// Clear and dispose of the internal variables. The finalizer is only called if Dispose() was never called on this cipher.
+		/// </summary>
+		~AES_CTR() 
+		{
+			Dispose(false);
+		}
+
+		/// <summary>
+		/// Clear and dispose of the internal state. Also request the GC not to call the finalizer, because all cleanup has been taken care of.
+		/// </summary>
+		public void Dispose() 
+		{
+			Dispose(true);
+			/*
+			 * The Garbage Collector does not need to invoke the finalizer because Dispose(bool) has already done all the cleanup needed.
+			 */
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// This method should only be invoked from Dispose() or the finalizer. This handles the actual cleanup of the resources.
+		/// </summary>
+		/// <param name="disposing">
+		/// Should be true if called by Dispose(); false if called by the finalizer
+		/// </param>
+		private void Dispose(bool disposing) 
+		{
+			if (!isDisposed) 
+			{
+				if (disposing) 
+				{
+					/* Cleanup managed objects by calling their Dispose() methods */
+					if (this.counterEncryptor != null)
+					{
+						this.counterEncryptor.Dispose();
+					}
+				}
+
+				/* Cleanup here */
+				if (this.counter != null) 
+				{
+					Array.Clear(this.counter, 0, this.counter.Length);
+				}
+
+				this.counter = null;				
+			}
+
+			isDisposed = true;
+		}
+
+		#endregion // Destructor and Disposer
 	}
 }
