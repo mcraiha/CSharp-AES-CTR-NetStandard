@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>LibAES-CTR</PackageId>
+    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+    <Authors>Kaarlo Räihä</Authors>
+    <Description>C# library for AES-CTR encrypting and decrypting</Description>
+    <IncludeSource>true</IncludeSource>
+    <PackageProjectUrl>https://github.com/mcraiha/CSharp-AES-CTR-NetStandard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mcraiha/CSharp-AES-CTR-NetStandard.git</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
 </Project>
