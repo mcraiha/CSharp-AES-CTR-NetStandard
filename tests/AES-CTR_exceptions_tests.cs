@@ -86,5 +86,27 @@ namespace Tests
 			Assert.Throws<ArgumentOutOfRangeException>(() => nullInput.EncryptBytes(validOutputArray, validInputArray, lengthOfData + 1));
 			Assert.Throws<ArgumentOutOfRangeException>(() => nullInput.EncryptBytes(new byte[lengthOfData/2], validInputArray, lengthOfData));
 		}
+
+		[Test]
+		public void DisposeAndTryToUse()
+		{
+			// Arrange
+			byte[] key = new byte[16] { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c };
+			byte[] initialCounter = new byte[] { 0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff };
+
+			byte[] content = new byte[] { 11, 24, 22, 134, 234, 33, 4, 14, 34, 56, 23 };
+			int contentLength = content.Length;
+
+			byte[] encrypted = new byte[contentLength];
+
+			AES_CTR forEncrypting = new AES_CTR(key, initialCounter);
+
+			// Act
+			forEncrypting.EncryptBytes(encrypted, content, contentLength);
+			forEncrypting.Dispose();
+
+			// Assert
+			Assert.Throws<ObjectDisposedException>(() => forEncrypting.EncryptBytes(encrypted, content, contentLength));
+		}
 	}
 }

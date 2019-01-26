@@ -333,7 +333,7 @@ namespace Tests
 		public void TestStringToUTF8BytesAndBack()
 		{
 			// Arrange
-			Random rng = new Random(Seed: 1337);
+			//Random rng = new Random(Seed: 1337);
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
 
@@ -348,6 +348,34 @@ namespace Tests
 
 			// Assert
 			Assert.AreEqual(testContent, decryptedString);
+		}
+
+		[Test]
+		public void TestDisposable()
+		{
+			// Arrange
+			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
+
+			byte[] content = new byte[] { 11, 24, 22, 134, 234, 33, 4, 14, 34, 56, 23 };
+			int contentLength = content.Length;
+
+			byte[] encrypted = new byte[contentLength];
+			byte[] decrypted = new byte[contentLength];
+
+			// Act
+			using (AES_CTR forEncrypting = new AES_CTR(key, initialCounter))
+			{
+				forEncrypting.EncryptBytes(encrypted, content, contentLength);
+			}
+
+			using (AES_CTR forDecrypting = new AES_CTR(key, initialCounter))
+			{
+				forDecrypting.DecryptBytes(decrypted, encrypted, contentLength);
+			}
+
+			// Assert
+			CollectionAssert.AreEqual(content, decrypted);
 		}
 	}
 }

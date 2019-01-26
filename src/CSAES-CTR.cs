@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace CS_AES_CTR
 {
-	public sealed class AES_CTR
+	public sealed class AES_CTR : IDisposable
 	{
 		/// <summary>
 		/// What are allowed key lengths (128, 192 and 256 bits)
