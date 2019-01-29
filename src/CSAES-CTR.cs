@@ -7,18 +7,18 @@ namespace CS_AES_CTR
 	public sealed class AES_CTR : IDisposable
 	{
 		/// <summary>
-		/// What are allowed key lengths (128, 192 and 256 bits)
+		/// What are allowed key lengths in bytes (128, 192 and 256 bits)
 		/// </summary>
 		/// <value></value>
 		public static readonly int[] allowedKeyLengths = new int[3] { 16, 24, 32 };
 
 		/// <summary>
-		/// What is allowed initial counter length
+		/// What is allowed initial counter length in bytes
 		/// </summary>
 		public const int allowedCounterLength = 16;
 
 		/// <summary>
-		/// Only allowed Initialization vector length
+		/// Only allowed Initialization vector length in bytes
 		/// </summary>
 		private const int ivLength = 16;
 
