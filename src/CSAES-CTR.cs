@@ -1,9 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Security.Cryptography;
 
 namespace CS_AES_CTR
 {
+	/// <summary>
+	/// Class that can be used for AES CTR encryption / decryption
+	/// </summary>
 	public sealed class AES_CTR : IDisposable
 	{
 		/// <summary>
