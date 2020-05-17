@@ -10,6 +10,10 @@ Managed .Net Standard 2.0 compatible [AES-CTR](https://en.wikipedia.org/wiki/Blo
 
 Because I needed this for my personal project
 
+## Documentation
+
+[Docs](https://mcraiha.github.io/CSharp-AES-CTR-NetStandard/api/index.html)
+
 
 ## How do I use this?
 
