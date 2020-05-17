@@ -94,7 +94,7 @@ namespace CS_AES_CTR
 		/// <param name="numBytes">Number of bytes to encrypt</param>
 		public void EncryptBytes(byte[] output, byte[] input, int numBytes)
 		{
-			WorkBytes(output, input, numBytes);
+			this.WorkBytes(output, input, numBytes);
 		}
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace CS_AES_CTR
 		/// <param name="input">Input byte array</param>
 		public void EncryptBytes(byte[] output, byte[] input)
 		{
-			WorkBytes(output, input, input.Length);
+			this.WorkBytes(output, input, input.Length);
 		}
 
 		/// <summary>
@@ -118,7 +118,7 @@ namespace CS_AES_CTR
 		public byte[] EncryptBytes(byte[] input, int numBytes)
 		{
 			byte[] returnArray = new byte[numBytes];
-			WorkBytes(returnArray, input, numBytes);
+			this.WorkBytes(returnArray, input, numBytes);
 			return returnArray;
 		}
 
@@ -131,7 +131,7 @@ namespace CS_AES_CTR
 		public byte[] EncryptBytes(byte[] input)
 		{
 			byte[] returnArray = new byte[input.Length];
-			WorkBytes(returnArray, input, input.Length);
+			this.WorkBytes(returnArray, input, input.Length);
 			return returnArray;
 		}
 
@@ -146,7 +146,7 @@ namespace CS_AES_CTR
 			byte[] utf8Bytes = System.Text.Encoding.UTF8.GetBytes(input);
 			byte[] returnArray = new byte[utf8Bytes.Length];
 
-			WorkBytes(returnArray, utf8Bytes, utf8Bytes.Length);
+			this.WorkBytes(returnArray, utf8Bytes, utf8Bytes.Length);
 			return returnArray;
 		}
 
@@ -164,7 +164,7 @@ namespace CS_AES_CTR
 		/// <param name="numBytes">Number of bytes to encrypt</param>
 		public void DecryptBytes(byte[] output, byte[] input, int numBytes)
 		{
-			WorkBytes(output, input, numBytes);
+			this.WorkBytes(output, input, numBytes);
 		}
 
 		/// <summary>
@@ -175,7 +175,7 @@ namespace CS_AES_CTR
 		/// <param name="input">Input byte array</param>
 		public void DecryptBytes(byte[] output, byte[] input)
 		{
-			WorkBytes(output, input, input.Length);
+			this.WorkBytes(output, input, input.Length);
 		}
 
 		/// <summary>
@@ -188,7 +188,7 @@ namespace CS_AES_CTR
 		public byte[] DecryptBytes(byte[] input, int numBytes)
 		{
 			byte[] returnArray = new byte[numBytes];
-			WorkBytes(returnArray, input, numBytes);
+			this.WorkBytes(returnArray, input, numBytes);
 			return returnArray;
 		}
 
@@ -201,7 +201,7 @@ namespace CS_AES_CTR
 		public byte[] DecryptBytes(byte[] input)
 		{
 			byte[] returnArray = new byte[input.Length];
-			WorkBytes(returnArray, input, input.Length);
+			this.WorkBytes(returnArray, input, input.Length);
 			return returnArray;
 		}
 
@@ -215,7 +215,7 @@ namespace CS_AES_CTR
 		{
 			byte[] tempArray = new byte[input.Length];
 
-			WorkBytes(tempArray, input, input.Length);
+			this.WorkBytes(tempArray, input, input.Length);
 			return System.Text.Encoding.UTF8.GetString(tempArray);
 		}
 
