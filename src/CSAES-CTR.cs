@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Security.Cryptography;
 
 namespace CS_AES_CTR
@@ -110,6 +111,18 @@ namespace CS_AES_CTR
 		}
 
 		/// <summary>
+		/// Async encrypt arbitrary-length byte stream (input), writing the resulting bytes to another stream (output)
+		/// </summary>
+		/// <param name="output">Output stream</param>
+		/// <param name="input">Input stream</param>
+		/// <param name="howManyBytesToProcessAtTime">How many bytes to read and write at time, default is 1024</param>
+		/// <returns></returns>
+		public async Task EncryptStreamAsync(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
+		{
+			await this.WorkStreamsAsync(output, input, howManyBytesToProcessAtTime);
+		}
+
+		/// <summary>
 		/// Encrypt arbitrary-length byte array (input), writing the resulting byte array to preallocated output buffer.
 		/// </summary>
 		/// <remarks>Since this is symmetric operation, it doesn't really matter if you use Encrypt or Decrypt method</remarks>
@@ -188,6 +201,18 @@ namespace CS_AES_CTR
 		public void DecryptStream(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
 		{
 			this.WorkStreams(output, input, howManyBytesToProcessAtTime);
+		}
+
+		/// <summary>
+		/// Async decrypt arbitrary-length byte stream (input), writing the resulting bytes to another stream (output)
+		/// </summary>
+		/// <param name="output">Output stream</param>
+		/// <param name="input">Input stream</param>
+		/// <param name="howManyBytesToProcessAtTime">How many bytes to read and write at time, default is 1024</param>
+		/// <returns></returns>
+		public async Task DecryptStreamAsync(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
+		{
+			await this.WorkStreamsAsync(output, input, howManyBytesToProcessAtTime);
 		}
 
 		/// <summary>
@@ -275,6 +300,25 @@ namespace CS_AES_CTR
 				// Read more
 				bytesToRead = reader.ReadBytes(howManyBytesToProcessAtTime);
 			}
+		}
+
+		private async Task WorkStreamsAsync(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
+		{
+			byte[] readBytesBuffer = new byte[howManyBytesToProcessAtTime];
+			byte[] writeBytesBuffer = new byte[howManyBytesToProcessAtTime];
+			int howManyBytesWereRead = await input.ReadAsync(readBytesBuffer, 0, howManyBytesToProcessAtTime);
+
+			while (howManyBytesWereRead > 0)
+			{
+				// Encrypt or decrypt
+				WorkBytes(output: writeBytesBuffer, input: readBytesBuffer, numBytes: howManyBytesWereRead);
+
+				// Write
+				await output.WriteAsync(writeBytesBuffer, 0, howManyBytesWereRead);
+
+				// Read more
+				howManyBytesWereRead = await input.ReadAsync(readBytesBuffer, 0, howManyBytesToProcessAtTime);
+			}		
 		}
 
 		private void WorkBytes(byte[] output, byte[] input, int numBytes)
