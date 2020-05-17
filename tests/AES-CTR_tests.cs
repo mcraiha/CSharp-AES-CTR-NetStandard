@@ -330,6 +330,68 @@ namespace Tests
 		}
 
 		[Test]
+		public void TestOverloadsNonPowerOfTwo()
+		{
+			// Arrange
+			Random rng = new Random(Seed: 1337);
+
+			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
+
+			const int lengthOfData = 13339;
+			byte[] randomContent = new byte[lengthOfData];
+			
+			byte[] encryptedContent1 = new byte[lengthOfData];
+			byte[] decryptedContent1 = new byte[lengthOfData];
+
+			byte[] encryptedContent2 = null;
+			byte[] decryptedContent2 = null;
+
+			byte[] encryptedContent3 = null;
+			byte[] decryptedContent3 = null;
+
+			AES_CTR forEncrypting1 = null;
+			AES_CTR forDecrypting1 = null;
+
+			AES_CTR forEncrypting2 = null;
+			AES_CTR forDecrypting2 = null;
+
+			AES_CTR forEncrypting3 = null;
+			AES_CTR forDecrypting3 = null;
+
+			// Act
+			rng.NextBytes(randomContent);
+
+			forEncrypting1 = new AES_CTR(key, initialCounter);
+			forDecrypting1 = new AES_CTR(key, initialCounter);
+
+			forEncrypting2 = new AES_CTR(key, initialCounter);
+			forDecrypting2 = new AES_CTR(key, initialCounter);
+
+			forEncrypting3 = new AES_CTR(key, initialCounter);
+			forDecrypting3 = new AES_CTR(key, initialCounter);
+
+			forEncrypting1.EncryptBytes(encryptedContent1, randomContent);
+			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1);
+
+			encryptedContent2 = forEncrypting2.EncryptBytes(randomContent, randomContent.Length);
+			decryptedContent2 = forDecrypting2.DecryptBytes(encryptedContent2, encryptedContent2.Length);
+
+			encryptedContent3 = forEncrypting3.EncryptBytes(randomContent);
+			decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3);
+
+			// Assert
+			CollectionAssert.AreEqual(randomContent, decryptedContent1);
+			CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+
+			CollectionAssert.AreEqual(randomContent, decryptedContent2);
+			CollectionAssert.AreNotEqual(randomContent, encryptedContent2);
+
+			CollectionAssert.AreEqual(randomContent, decryptedContent3);
+			CollectionAssert.AreNotEqual(randomContent, encryptedContent3);
+		}
+
+		[Test]
 		public void TestStringToUTF8BytesAndBack()
 		{
 			// Arrange
