@@ -1,3 +1,7 @@
+## Version 0.9.3 (released 2020-05-17)
+- Support stream encryption/decryption (**FEATURE**)
+- Add async versions of stream processing (**FEATURE**)
+
 ## Version 0.9.2 (released 2020-01-12)
 - Generate documentation (**FEATURE**)
 
