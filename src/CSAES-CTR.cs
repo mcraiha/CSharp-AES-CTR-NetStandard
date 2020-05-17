@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace CS_AES_CTR
@@ -98,6 +99,17 @@ namespace CS_AES_CTR
 		}
 
 		/// <summary>
+		/// Encrypt arbitrary-length byte stream (input), writing the resulting bytes to another stream (output)
+		/// </summary>
+		/// <param name="output">Output stream</param>
+		/// <param name="input">Input stream</param>
+		/// <param name="howManyBytesToProcessAtTime">How many bytes to read and write at time, default is 1024</param>
+		public void EncryptStream(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
+		{
+			this.WorkStreams(output, input, howManyBytesToProcessAtTime);
+		}
+
+		/// <summary>
 		/// Encrypt arbitrary-length byte array (input), writing the resulting byte array to preallocated output buffer.
 		/// </summary>
 		/// <remarks>Since this is symmetric operation, it doesn't really matter if you use Encrypt or Decrypt method</remarks>
@@ -168,6 +180,17 @@ namespace CS_AES_CTR
 		}
 
 		/// <summary>
+		/// Decrypt arbitrary-length byte stream (input), writing the resulting bytes to another stream (output)
+		/// </summary>
+		/// <param name="output">Output stream</param>
+		/// <param name="input">Input stream</param>
+		/// <param name="howManyBytesToProcessAtTime">How many bytes to read and write at time, default is 1024</param>
+		public void DecryptStream(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
+		{
+			this.WorkStreams(output, input, howManyBytesToProcessAtTime);
+		}
+
+		/// <summary>
 		/// Decrypt arbitrary-length byte array (input), writing the resulting byte array to preallocated output buffer.
 		/// </summary>
 		/// <remarks>Since this is symmetric operation, it doesn't really matter if you use Encrypt or Decrypt method</remarks>
@@ -220,6 +243,39 @@ namespace CS_AES_CTR
 		}
 
 		#endregion // Decrypt
+
+		/// <summary>
+		/// Decrypt / Encrypt arbitrary-length byte stream (input), writing the resulting bytes to another stream (output)
+		/// </summary>
+		/// <param name="output">Output stream</param>
+		/// <param name="input">Input stream</param>
+		/// <param name="howManyBytesToProcessAtTime">How many bytes to read and write at time, default is 1024</param>
+		private void WorkStreams(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
+		{
+			BinaryReader reader = new BinaryReader(input);
+			BinaryWriter writer = new BinaryWriter(output);
+
+			byte[] bytesToRead = reader.ReadBytes(howManyBytesToProcessAtTime);
+			byte[] bytesToWrite = new byte[bytesToRead.Length];
+
+			while (bytesToRead.Length > 0)
+			{
+				// Reallocate only when needed
+				if (bytesToWrite.Length != bytesToRead.Length)
+				{
+					bytesToWrite = new byte[bytesToRead.Length];
+				}
+
+				// Encrypt or decrypt
+				WorkBytes(output: bytesToWrite, input: bytesToRead, numBytes: bytesToRead.Length);
+
+				// Write
+				writer.Write(bytesToWrite);
+
+				// Read more
+				bytesToRead = reader.ReadBytes(howManyBytesToProcessAtTime);
+			}
+		}
 
 		private void WorkBytes(byte[] output, byte[] input, int numBytes)
 		{

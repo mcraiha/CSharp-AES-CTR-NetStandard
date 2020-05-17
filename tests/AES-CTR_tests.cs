@@ -392,6 +392,70 @@ namespace Tests
 		}
 
 		[Test]
+		public void TestStreamEncryptDecrypt()
+		{
+			// Arrange
+			Random rng = new Random(Seed: 1339);
+
+			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
+
+			const int lengthOfData = 4096;
+			byte[] randomContent = new byte[lengthOfData];
+			
+			byte[] encryptedContent1 = new byte[lengthOfData];
+			byte[] decryptedContent1 = new byte[lengthOfData];
+
+			AES_CTR forEncrypting1 = null;
+			AES_CTR forDecrypting1 = null;
+
+			// Act
+			rng.NextBytes(randomContent);
+
+			forEncrypting1 = new AES_CTR(key, initialCounter);
+			forDecrypting1 = new AES_CTR(key, initialCounter);
+
+			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
+			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
+
+			// Assert
+			CollectionAssert.AreEqual(randomContent, decryptedContent1);
+			CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		}
+
+		[Test]
+		public void TestStreamEncryptDecryptNonPowerOfTwo()
+		{
+			// Arrange
+			Random rng = new Random(Seed: 1339);
+
+			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
+
+			const int lengthOfData = 21111;
+			byte[] randomContent = new byte[lengthOfData];
+			
+			byte[] encryptedContent1 = new byte[lengthOfData];
+			byte[] decryptedContent1 = new byte[lengthOfData];
+
+			AES_CTR forEncrypting1 = null;
+			AES_CTR forDecrypting1 = null;
+
+			// Act
+			rng.NextBytes(randomContent);
+
+			forEncrypting1 = new AES_CTR(key, initialCounter);
+			forDecrypting1 = new AES_CTR(key, initialCounter);
+
+			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
+			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
+
+			// Assert
+			CollectionAssert.AreEqual(randomContent, decryptedContent1);
+			CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		}
+
+		[Test]
 		public void TestStringToUTF8BytesAndBack()
 		{
 			// Arrange
