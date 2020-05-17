@@ -47,8 +47,8 @@ namespace CS_AES_CTR
 		/// <summary>
 		/// AES_CTR constructor
 		/// </summary>
-		/// <param name="key">Key as byte array</param>
-		/// <param name="initialCounter">Initial counter as byte array</param>
+		/// <param name="key">Key as byte array. (128, 192 or 256 bits)</param>
+		/// <param name="initialCounter">Initial counter as byte array. 16 bytes</param>
 		public AES_CTR(byte[] key, byte[] initialCounter)
 		{
 			if (key == null) 
