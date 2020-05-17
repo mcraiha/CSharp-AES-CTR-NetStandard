@@ -1,6 +1,6 @@
 # CSharp-AES-CTR-NetStandard
 
-.Net Standard 2.0 compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [AesManaged](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesmanaged?view=netstandard-2.0) for AES operations)
+Managed .Net Standard 2.0 compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [AesManaged](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesmanaged?view=netstandard-2.0) for AES operations)
 
 ## Build status
 
@@ -36,6 +36,8 @@ byte[] decryptedContent = new byte[encryptedContent.Length];
 forDecrypting.DecryptBytes(decryptedContent, encryptedContent);
 
 ```
+
+You can try out the code in [.NET Fiddle](https://dotnetfiddle.net/mtvYHv)
 
 ## Test cases
 
