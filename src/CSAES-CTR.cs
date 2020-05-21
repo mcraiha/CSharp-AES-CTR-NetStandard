@@ -353,10 +353,11 @@ namespace CS_AES_CTR
 			int outputOffset = 0;
 			int inputOffset = 0;
 
+			var tmp = new byte[allowedCounterLength];
+
 			while (numBytes > 0)
 			{
 				// Generate new XOR mask for next processBytesAtTime
-				var tmp = new byte[allowedCounterLength];
 				counterEncryptor.TransformBlock(counter, 0, counter.Length, tmp, 0);
 
 				// Increase counter (basically this increases the last index first and continues to one before that if 255 -> 0, better solution would be to use uint128, but it does not exist yet)
