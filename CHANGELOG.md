@@ -1,3 +1,6 @@
+## Version 0.9.4 (NOT released yet)
+- Reduce memory allocations (**PERFORMANCE**)
+
 ## Version 0.9.3 (released 2020-05-17)
 - Support stream encryption/decryption (**FEATURE**)
 - Add async versions of stream processing (**FEATURE**)
