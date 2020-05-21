@@ -8,6 +8,7 @@ using CS_AES_CTR;
 
 namespace benchmarks
 {
+    [MemoryDiagnoser]
     public class OriginalVsAdjusted
     {
         private const int dataLength1 = 64;
