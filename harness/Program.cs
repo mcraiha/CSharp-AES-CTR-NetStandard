@@ -25,6 +25,10 @@ namespace harness
 			{
 				errorWriter.WriteLine($"Limit is {limit} bytes");
 			}
+			else
+			{
+				errorWriter.WriteLine($"No byte limit");
+			}
 
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
