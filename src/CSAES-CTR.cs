@@ -350,8 +350,7 @@ namespace CS_AES_CTR
 			}
 
 
-			int outputOffset = 0;
-			int inputOffset = 0;
+			int offset = 0;
 
 			var tmp = new byte[allowedCounterLength];
 
@@ -374,19 +373,18 @@ namespace CS_AES_CTR
 				{
 					for (int i = 0; i < numBytes; i++) 
 					{
-						output[i + outputOffset] = (byte) (input[i + inputOffset] ^ tmp[i]);
+						output[i + offset] = (byte) (input[i + offset] ^ tmp[i]);
 					}
 					return;
 				}
 
 				for (int i = 0; i < processBytesAtTime; i++ ) 
 				{
-					output[i + outputOffset] = (byte) (input[i + inputOffset] ^ tmp[i]);
+					output[i + offset] = (byte) (input[i + offset] ^ tmp[i]);
 				}
 
 				numBytes -= processBytesAtTime;
-				outputOffset += processBytesAtTime;
-				inputOffset += processBytesAtTime;
+				offset += processBytesAtTime;
 			}
 		}
 
