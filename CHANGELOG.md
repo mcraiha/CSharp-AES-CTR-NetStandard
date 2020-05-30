@@ -1,4 +1,4 @@
-## Version 0.9.4 (NOT released yet)
+## Version 0.9.4 (released 2020-05-30)
 - Reduce memory allocations (**PERFORMANCE**)
 
 ## Version 0.9.3 (released 2020-05-17)
