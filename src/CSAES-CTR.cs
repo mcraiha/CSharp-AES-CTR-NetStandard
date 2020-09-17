@@ -46,12 +46,17 @@ namespace CS_AES_CTR
 		/// </summary>
 		private bool isDisposed;
 
+        /// <summary>
+        /// Changes counter behaviour according endianess.
+        /// </summary>
+	    private bool isLittleEndian;
+
 		/// <summary>
-		/// AES_CTR constructor
-		/// </summary>
-		/// <param name="key">Key as byte array. (128, 192 or 256 bits)</param>
-		/// <param name="initialCounter">Initial counter as byte array. 16 bytes</param>
-		public AES_CTR(byte[] key, byte[] initialCounter)
+        /// AES_CTR constructor
+        /// </summary>
+        /// <param name="key">Key as byte array. (128, 192 or 256 bits)</param>
+        /// <param name="initialCounter">Initial counter as byte array. 16 bytes</param>
+        public AES_CTR(byte[] key, byte[] initialCounter, bool littleEndian = false)
 		{
 			if (key == null) 
 			{
@@ -80,8 +85,10 @@ namespace CS_AES_CTR
 			// Create copy of initial counter since state is kept during the lifetime of AES_CTR
 			Buffer.BlockCopy(initialCounter, 0, this.counter, 0, allowedCounterLength);
 
-			// Initialization vector is always full of zero bytes in CTR mode
-			var zeroIv = new byte[ivLength];
+		    this.isLittleEndian = littleEndian;
+
+            // Initialization vector is always full of zero bytes in CTR mode
+            var zeroIv = new byte[ivLength];
 			this.counterEncryptor = aes.CreateEncryptor(key, zeroIv);
 		}
 
@@ -360,16 +367,31 @@ namespace CS_AES_CTR
 				counterEncryptor.TransformBlock(counter, 0, counter.Length, tmp, 0);
 
 				// Increase counter (basically this increases the last index first and continues to one before that if 255 -> 0, better solution would be to use uint128, but it does not exist yet)
-				for (int i = counter.Length - 1; i >= 0; i--)
-				{
-					if (++counter[i] != 0)
-					{
-						break;
-					}
-				}
+			    if (this.isLittleEndian)
+			    {
+			        //LittleEndian
+			        for (int i = 0; i < counter.Length; i++)
+			        {
+			            if (++counter[i] != 0)
+			            {
+			                break;
+			            }
+			        }
+			    }
+			    else
+			    {
+			        //BigEndian
+			        for (int i = counter.Length - 1; i >= 0; i--)
+			        {
+			            if (++counter[i] != 0)
+			            {
+			                break;
+			            }
+			        }
+			    }
 
-				// Last bytes
-				if (numBytes <= processBytesAtTime) 
+                // Last bytes
+                if (numBytes <= processBytesAtTime) 
 				{
 					for (int i = 0; i < numBytes; i++) 
 					{
