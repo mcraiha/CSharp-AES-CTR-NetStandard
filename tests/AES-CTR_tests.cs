@@ -3,6 +3,7 @@ using System.IO;
 using CS_AES_CTR;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Tests
 {
@@ -524,7 +525,6 @@ namespace Tests
 		public void TestStringToUTF8BytesAndBack()
 		{
 			// Arrange
-			//Random rng = new Random(Seed: 1337);
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 			byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
 
@@ -539,6 +539,56 @@ namespace Tests
 
 			// Assert
 			Assert.AreEqual(testContent, decryptedString);
+		}
+
+		[Test]
+		public void TestLittleEndianRoundtrip()
+		{
+			// Arrange
+			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			byte[] initialCounterLittle = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE };
+
+			string testContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius tristique convallis. Fusce finibus pharetra aliquam. Vivamus eleifend sapien ut enim efficitur, sed auctor tortor aliquam. Aliquam eget rutrum tortor. Cras eget nisi commodo, commodo lorem quis, aliquam arcu. Nulla facilisis purus ligula, sit amet gravida nibh ultricies eu.";
+
+			AES_CTR forEncryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
+			AES_CTR forDecryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
+
+			// Act
+			byte[] encryptedContentLittle = forEncryptingLittle.EncryptString(testContent);
+			string decryptedStringLittle = forDecryptingLittle.DecryptUTF8ByteArray(encryptedContentLittle);
+
+			// Assert
+			Assert.AreEqual(testContent, decryptedStringLittle);
+		}
+
+		[Test]
+		public void TestLittleEndianProduceDifferentResults()
+		{
+			// Arrange
+			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			byte[] initialCounterBig = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+			byte[] initialCounterLittle = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+			byte[] input = new byte[32] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }; 
+
+			AES_CTR forEncryptingBig = new AES_CTR(key, initialCounterBig);
+			AES_CTR forDecryptingBig = new AES_CTR(key, initialCounterBig);
+
+			AES_CTR forEncryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
+			AES_CTR forDecryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
+
+			// Act
+			byte[] encryptedContentBig = forEncryptingBig.EncryptBytes(input);
+			byte[] decryptedContentBig = forDecryptingBig.DecryptBytes(encryptedContentBig);
+
+			byte[] encryptedContentLittle = forEncryptingLittle.EncryptBytes(input);
+			byte[] decryptedContentLittle = forDecryptingLittle.DecryptBytes(encryptedContentLittle);
+
+			// Assert
+			CollectionAssert.AreEqual(input, decryptedContentBig);
+			CollectionAssert.AreEqual(input, decryptedContentLittle);
+			CollectionAssert.AreEqual(encryptedContentBig.Take(16), encryptedContentLittle.Take(16), "First 16 bytes should be equal");
+			CollectionAssert.AreNotEqual(encryptedContentBig.Skip(16).Take(16), encryptedContentLittle.Skip(16).Take(16), "Last 16 bytes should not be equal since counter byte array increases from different positions");
 		}
 
 		[Test]
