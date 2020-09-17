@@ -1,3 +1,6 @@
+## Version 0.9.5 (released 2020-09-17)
+- Support Little endian counter bytes, thanks to **p-hu** (**FEATURE**)
+
 ## Version 0.9.4 (released 2020-05-30)
 - Reduce memory allocations (**PERFORMANCE**)
 
