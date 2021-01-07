@@ -285,28 +285,18 @@ namespace CS_AES_CTR
 		/// <param name="howManyBytesToProcessAtTime">How many bytes to read and write at time, default is 1024</param>
 		private void WorkStreams(Stream output, Stream input, int howManyBytesToProcessAtTime = 1024)
 		{
-			BinaryReader reader = new BinaryReader(input);
-			BinaryWriter writer = new BinaryWriter(output);
+			int readBytes;
 
-			byte[] bytesToRead = reader.ReadBytes(howManyBytesToProcessAtTime);
-			byte[] bytesToWrite = new byte[bytesToRead.Length];
+			byte[] inputBuffer = new byte[howManyBytesToProcessAtTime];
+			byte[] outputBuffer = new byte[howManyBytesToProcessAtTime];
 
-			while (bytesToRead.Length > 0)
+			while ((readBytes = input.Read(inputBuffer, 0, howManyBytesToProcessAtTime)) > 0)
 			{
-				// Reallocate only when needed
-				if (bytesToWrite.Length != bytesToRead.Length)
-				{
-					bytesToWrite = new byte[bytesToRead.Length];
-				}
-
 				// Encrypt or decrypt
-				WorkBytes(output: bytesToWrite, input: bytesToRead, numBytes: bytesToRead.Length);
+				WorkBytes(output: outputBuffer, input: inputBuffer, numBytes: readBytes);
 
-				// Write
-				writer.Write(bytesToWrite);
-
-				// Read more
-				bytesToRead = reader.ReadBytes(howManyBytesToProcessAtTime);
+				// Write buffer
+				output.Write(outputBuffer, 0, readBytes);
 			}
 		}
 
