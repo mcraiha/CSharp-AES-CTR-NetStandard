@@ -1,3 +1,6 @@
+## Version 0.9.6 (released 2021-01-07)
+- WorkStreams optimization, thanks to **Akintos** (**PERFORMANCE**)
+
 ## Version 0.9.5 (released 2020-09-17)
 - Support Little endian counter bytes, thanks to **p-hu** (**FEATURE**)
 
