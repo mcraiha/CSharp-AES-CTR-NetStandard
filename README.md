@@ -4,7 +4,7 @@ Managed .Net Standard 2.0 compatible [AES-CTR](https://en.wikipedia.org/wiki/Blo
 
 ## Build status
 
-[![Build Status](https://travis-ci.com/mcraiha/CSharp-AES-CTR-NetStandard.svg?branch=master)](https://travis-ci.com/mcraiha/CSharp-AES-CTR-NetStandard)
+![.NET](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/workflows/.NET/badge.svg)
 
 ## Why?
 
