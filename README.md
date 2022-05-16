@@ -5,6 +5,7 @@ Managed .Net Standard 2.0 compatible [AES-CTR](https://en.wikipedia.org/wiki/Blo
 ## Build status
 
 ![.NET](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/workflows/.NET/badge.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/0b754630aa9b47109afbd7d0a7f3c10e)](https://www.codacy.com/gh/mcraiha/CSharp-AES-CTR-NetStandard/dashboard?utm_source=github.com&utm_medium=referral&utm_content=mcraiha/CSharp-AES-CTR-NetStandard&utm_campaign=Badge_Coverage)
 
 ## Why?
 
