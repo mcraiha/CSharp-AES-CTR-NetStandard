@@ -355,13 +355,13 @@ namespace CS_AES_CTR
 			while (numBytes > 0)
 			{
 				// Generate new XOR mask for next processBytesAtTime
-				counterEncryptor.TransformBlock(counter, 0, counter.Length, tmp, 0);
+				counterEncryptor.TransformBlock(counter, 0, allowedCounterLength, tmp, 0);
 
 				// Increase counter (basically this increases the last index first and continues to one before that if 255 -> 0, better solution would be to use uint128, but it does not exist yet)
 				if (this.isLittleEndian)
 				{
 					// LittleEndian
-					for (int i = 0; i < counter.Length; i++)
+					for (int i = 0; i < allowedCounterLength; i++)
 					{
 						if (++counter[i] != 0)
 						{
@@ -372,7 +372,7 @@ namespace CS_AES_CTR
 				else
 				{
 					// BigEndian
-					for (int i = counter.Length - 1; i >= 0; i--)
+					for (int i = allowedCounterLength - 1; i >= 0; i--)
 					{
 						if (++counter[i] != 0)
 						{
@@ -444,7 +444,7 @@ namespace CS_AES_CTR
 				}
 
 				/* Cleanup here */
-				Array.Clear(this.counter, 0, this.counter.Length);	
+				Array.Clear(this.counter, 0, allowedCounterLength);	
 			}
 
 			isDisposed = true;
