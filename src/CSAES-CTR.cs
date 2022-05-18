@@ -34,7 +34,7 @@ namespace CS_AES_CTR
 		/// <summary>
 		/// Internal counter
 		/// </summary>
-		private byte[] counter = new byte[allowedCounterLength];
+		private readonly byte[] counter = new byte[allowedCounterLength];
 
 		/// <summary>
 		/// Internal transformer for doing encrypt/decrypt transforming
@@ -444,12 +444,7 @@ namespace CS_AES_CTR
 				}
 
 				/* Cleanup here */
-				if (this.counter != null) 
-				{
-					Array.Clear(this.counter, 0, this.counter.Length);
-				}
-
-				this.counter = null;				
+				Array.Clear(this.counter, 0, this.counter.Length);	
 			}
 
 			isDisposed = true;
