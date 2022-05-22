@@ -41,6 +41,13 @@ namespace Tests
 			byte[] expectedOutput4 = new byte[] { 0x1e, 0x03, 0x1d, 0xda, 0x2f, 0xbe, 0x03, 0xd1, 0x79, 0x21, 0x70, 0xa0, 0xf3, 0x00, 0x9c, 0xee };
 			byte[] actualOutput4 = new byte[bytesToEncrypt4.Length];
 
+			#if NET6_0_OR_GREATER
+			byte[] actualOutput1DifferentConstructor = new byte[bytesToEncrypt1.Length];
+			byte[] actualOutput2DifferentConstructor = new byte[bytesToEncrypt2.Length];
+			byte[] actualOutput3DifferentConstructor = new byte[bytesToEncrypt3.Length];
+			byte[] actualOutput4DifferentConstructor = new byte[bytesToEncrypt4.Length];
+			#endif // NET6_0_OR_GREATER
+
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
 			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
@@ -48,11 +55,26 @@ namespace Tests
 			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
 			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length);
 
+			#if NET6_0_OR_GREATER
+			AES_CTR aesCtrDifferentConstructor = new AES_CTR(new ReadOnlySpan<byte>(key), new ReadOnlySpan<byte>(initialCounter));
+			aesCtrDifferentConstructor.EncryptBytes(actualOutput1DifferentConstructor, bytesToEncrypt1, bytesToEncrypt1.Length);
+			aesCtrDifferentConstructor.EncryptBytes(actualOutput2DifferentConstructor, bytesToEncrypt2, bytesToEncrypt2.Length);
+			aesCtrDifferentConstructor.EncryptBytes(actualOutput3DifferentConstructor, bytesToEncrypt3, bytesToEncrypt3.Length);
+			aesCtrDifferentConstructor.EncryptBytes(actualOutput4DifferentConstructor, bytesToEncrypt4, bytesToEncrypt4.Length);
+			#endif // NET6_0_OR_GREATER
+
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
 			CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
 			CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
 			CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+
+			#if NET6_0_OR_GREATER
+			CollectionAssert.AreEqual(expectedOutput1, actualOutput1DifferentConstructor);
+			CollectionAssert.AreEqual(expectedOutput2, actualOutput2DifferentConstructor);
+			CollectionAssert.AreEqual(expectedOutput3, actualOutput3DifferentConstructor);
+			CollectionAssert.AreEqual(expectedOutput4, actualOutput4DifferentConstructor);
+			#endif // NET6_0_OR_GREATER
 		}
 
 		[Test]

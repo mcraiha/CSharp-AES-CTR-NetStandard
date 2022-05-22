@@ -51,6 +51,22 @@ namespace CS_AES_CTR
 		/// </summary>
 		private readonly bool isLittleEndian;
 
+		#if NET6_0_OR_GREATER
+
+		/// <summary>
+		/// AES_CTR constructor
+		/// </summary>
+		/// <param name="key">Key as readonlyspan. (128, 192 or 256 bits)</param>
+		/// <param name="initialCounter">Initial counter as readonlyspan. 16 bytes</param>
+		/// <param name="littleEndian">Is initial counter little endian (default false)</param>
+		/// <returns></returns>
+		public AES_CTR(ReadOnlySpan<byte> key, ReadOnlySpan<byte> initialCounter, bool littleEndian = false) : this(key.ToArray(), initialCounter.ToArray(), littleEndian)
+		{
+
+		}
+
+		#endif // NET6_0_OR_GREATER
+
 		/// <summary>
 		/// AES_CTR constructor
 		/// </summary>
