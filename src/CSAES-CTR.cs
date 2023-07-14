@@ -407,7 +407,7 @@ namespace CS_AES_CTR
 					return;
 				}
 
-				for (int i = 0; i < processBytesAtTime; i++ ) 
+				for (int i = 0; i < processBytesAtTime; i++) 
 				{
 					output[i + offset] = (byte) (input[i + offset] ^ tmp[i]);
 				}
