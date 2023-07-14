@@ -1,3 +1,6 @@
+## Version 1.0.1 (no released yet)
+- Include nuget-readme
+
 ## Version 1.0.0 (released 2022-05-24)
 - Support net6.0
 - Deterministic build
