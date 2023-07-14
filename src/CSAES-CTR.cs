@@ -82,7 +82,7 @@ namespace CS_AES_CTR
 
 			if (!Array.Exists(allowedKeyLengths, allowed => allowed == key.Length))
 			{
-				throw new ArgumentException($"Key length must be {allowedKeyLengths[0]}, {allowedKeyLengths[1]} or {allowedKeyLengths[2]} bytes. Actual: {key.Length}");
+				throw new ArgumentException($"Key length must be either {allowedKeyLengths[0]}, {allowedKeyLengths[1]} or {allowedKeyLengths[2]} bytes. Actual: {key.Length}");
 			}
 
 			if (initialCounter == null)
@@ -309,7 +309,7 @@ namespace CS_AES_CTR
 			while ((readBytes = input.Read(inputBuffer, 0, howManyBytesToProcessAtTime)) > 0)
 			{
 				// Encrypt or decrypt
-				WorkBytes(output: outputBuffer, input: inputBuffer, numBytes: readBytes);
+				this.WorkBytes(output: outputBuffer, input: inputBuffer, numBytes: readBytes);
 
 				// Write buffer
 				output.Write(outputBuffer, 0, readBytes);
@@ -325,7 +325,7 @@ namespace CS_AES_CTR
 			while (howManyBytesWereRead > 0)
 			{
 				// Encrypt or decrypt
-				WorkBytes(output: writeBytesBuffer, input: readBytesBuffer, numBytes: howManyBytesWereRead);
+				this.WorkBytes(output: writeBytesBuffer, input: readBytesBuffer, numBytes: howManyBytesWereRead);
 
 				// Write
 				await output.WriteAsync(writeBytesBuffer, 0, howManyBytesWereRead);
@@ -371,7 +371,7 @@ namespace CS_AES_CTR
 			while (numBytes > 0)
 			{
 				// Generate new XOR mask for next processBytesAtTime
-				counterEncryptor.TransformBlock(counter, 0, allowedCounterLength, tmp, 0);
+				this.counterEncryptor.TransformBlock(counter, 0, allowedCounterLength, tmp, 0);
 
 				// Increase counter (basically this increases the last index first and continues to one before that if 255 -> 0, better solution would be to use uint128, but it does not exist yet)
 				if (this.isLittleEndian)
