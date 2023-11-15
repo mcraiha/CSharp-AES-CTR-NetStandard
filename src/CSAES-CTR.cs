@@ -97,7 +97,9 @@ namespace CS_AES_CTR
 
 			this.isDisposed = false;
 
-			SymmetricAlgorithm aes = new AesManaged { Mode = CipherMode.ECB, Padding = PaddingMode.None };
+			SymmetricAlgorithm aes = Aes.Create();
+			aes.Mode = CipherMode.ECB;
+			aes.Padding = PaddingMode.None;
 			
 			// Create copy of initial counter since state is kept during the lifetime of AES_CTR
 			Buffer.BlockCopy(initialCounter, 0, this.counter, 0, allowedCounterLength);
