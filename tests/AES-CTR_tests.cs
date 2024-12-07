@@ -17,7 +17,9 @@ namespace Tests
 
 
 		[Test]
-		public void Known_CTR_AES128EncryptTest()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_CTR_AES128EncryptTest(bool useSIMD)
 		{
 			// Arrange
 
@@ -41,27 +43,23 @@ namespace Tests
 			byte[] expectedOutput4 = new byte[] { 0x1e, 0x03, 0x1d, 0xda, 0x2f, 0xbe, 0x03, 0xd1, 0x79, 0x21, 0x70, 0xa0, 0xf3, 0x00, 0x9c, 0xee };
 			byte[] actualOutput4 = new byte[bytesToEncrypt4.Length];
 
-			#if NET6_0_OR_GREATER
 			byte[] actualOutput1DifferentConstructor = new byte[bytesToEncrypt1.Length];
 			byte[] actualOutput2DifferentConstructor = new byte[bytesToEncrypt2.Length];
 			byte[] actualOutput3DifferentConstructor = new byte[bytesToEncrypt3.Length];
 			byte[] actualOutput4DifferentConstructor = new byte[bytesToEncrypt4.Length];
-			#endif // NET6_0_OR_GREATER
 
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
-			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length);
-			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
-			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length);
+			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length, useSIMD);
 
-			#if NET6_0_OR_GREATER
 			AES_CTR aesCtrDifferentConstructor = new AES_CTR(new ReadOnlySpan<byte>(key), new ReadOnlySpan<byte>(initialCounter));
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput1DifferentConstructor, bytesToEncrypt1, bytesToEncrypt1.Length);
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput2DifferentConstructor, bytesToEncrypt2, bytesToEncrypt2.Length);
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput3DifferentConstructor, bytesToEncrypt3, bytesToEncrypt3.Length);
 			aesCtrDifferentConstructor.EncryptBytes(actualOutput4DifferentConstructor, bytesToEncrypt4, bytesToEncrypt4.Length);
-			#endif // NET6_0_OR_GREATER
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
@@ -69,16 +67,16 @@ namespace Tests
 			CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
 			CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
 
-			#if NET6_0_OR_GREATER
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1DifferentConstructor);
 			CollectionAssert.AreEqual(expectedOutput2, actualOutput2DifferentConstructor);
 			CollectionAssert.AreEqual(expectedOutput3, actualOutput3DifferentConstructor);
 			CollectionAssert.AreEqual(expectedOutput4, actualOutput4DifferentConstructor);
-			#endif // NET6_0_OR_GREATER
 		}
 
 		[Test]
-		public void Known_CTR_AES128DecryptTest()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_CTR_AES128DecryptTest(bool useSIMD)
 		{
 			// Arrange
 
@@ -104,10 +102,10 @@ namespace Tests
 
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length);
-			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length);
-			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length);
-			aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length);
+			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
@@ -117,7 +115,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void Known_CTR_AES192EncryptTest()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_CTR_AES192EncryptTest(bool useSIMD)
 		{
 			// Arrange
 
@@ -143,10 +143,10 @@ namespace Tests
 
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
-			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length);
-			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
-			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length);
+			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
@@ -156,7 +156,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void Known_CTR_AES192DecryptTest()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_CTR_AES192DecryptTest(bool useSIMD)
 		{
 			// Arrange
 
@@ -182,10 +184,10 @@ namespace Tests
 
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length);
-			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length);
-			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length);
-			aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length);
+			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
@@ -195,7 +197,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void Known_CTR_AES256EncryptTest()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_CTR_AES256EncryptTest(bool useSIMD)
 		{
 			// Arrange
 
@@ -221,10 +225,10 @@ namespace Tests
 
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length);
-			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length);
-			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length);
-			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length);
+			aesCtr.EncryptBytes(actualOutput1, bytesToEncrypt1, bytesToEncrypt1.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput2, bytesToEncrypt2, bytesToEncrypt2.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput3, bytesToEncrypt3, bytesToEncrypt3.Length, useSIMD);
+			aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
@@ -234,7 +238,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void Known_CTR_AES256DecryptTest()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_CTR_AES256DecryptTest(bool useSIMD)
 		{
 			// Arrange
 
@@ -260,10 +266,10 @@ namespace Tests
 
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length);
-			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length);
-			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length);
-			aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length);
+			aesCtr.DecryptBytes(actualOutput1, bytesToDecrypt1, bytesToDecrypt1.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput2, bytesToDecrypt2, bytesToDecrypt2.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput3, bytesToDecrypt3, bytesToDecrypt3.Length, useSIMD);
+			aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
@@ -273,7 +279,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void Known_Text_CTR_AES128Test()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Known_Text_CTR_AES128Test(bool useSIMD)
 		{
 			// Arrange
 			// These values are from https://github.com/ricmoo/aes-js/blob/master/README.md
@@ -285,14 +293,16 @@ namespace Tests
 			byte[] actualOutput = new byte[expectedOutput.Length];
 			// Act
 			AES_CTR aesCtr = new AES_CTR(key, initialCounter);
-			aesCtr.EncryptBytes(actualOutput, bytesToEncrypt, bytesToEncrypt.Length);
+			aesCtr.EncryptBytes(actualOutput, bytesToEncrypt, bytesToEncrypt.Length, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(expectedOutput, actualOutput);
 		}
 
 		[Test]
-		public void TestOverloads()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestOverloads(bool useSIMD)
 		{
 			// Arrange
 			Random rng = new Random(Seed: 1337);
@@ -333,14 +343,14 @@ namespace Tests
 			forEncrypting3 = new AES_CTR(key, initialCounter);
 			forDecrypting3 = new AES_CTR(key, initialCounter);
 
-			forEncrypting1.EncryptBytes(encryptedContent1, randomContent);
-			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1);
+			forEncrypting1.EncryptBytes(encryptedContent1, randomContent, useSIMD);
+			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1, useSIMD);
 
-			encryptedContent2 = forEncrypting2.EncryptBytes(randomContent, randomContent.Length);
-			decryptedContent2 = forDecrypting2.DecryptBytes(encryptedContent2, encryptedContent2.Length);
+			encryptedContent2 = forEncrypting2.EncryptBytes(randomContent, randomContent.Length, useSIMD);
+			decryptedContent2 = forDecrypting2.DecryptBytes(encryptedContent2, encryptedContent2.Length, useSIMD);
 
-			encryptedContent3 = forEncrypting3.EncryptBytes(randomContent);
-			decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3);
+			encryptedContent3 = forEncrypting3.EncryptBytes(randomContent, useSIMD);
+			decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(randomContent, decryptedContent1);
@@ -354,7 +364,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void TestOverloadsNonPowerOfTwo()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestOverloadsNonPowerOfTwo(bool useSIMD)
 		{
 			// Arrange
 			Random rng = new Random(Seed: 1337);
@@ -395,14 +407,14 @@ namespace Tests
 			forEncrypting3 = new AES_CTR(key, initialCounter);
 			forDecrypting3 = new AES_CTR(key, initialCounter);
 
-			forEncrypting1.EncryptBytes(encryptedContent1, randomContent);
-			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1);
+			forEncrypting1.EncryptBytes(encryptedContent1, randomContent, useSIMD);
+			forDecrypting1.DecryptBytes(decryptedContent1, encryptedContent1, useSIMD);
 
-			encryptedContent2 = forEncrypting2.EncryptBytes(randomContent, randomContent.Length);
-			decryptedContent2 = forDecrypting2.DecryptBytes(encryptedContent2, encryptedContent2.Length);
+			encryptedContent2 = forEncrypting2.EncryptBytes(randomContent, randomContent.Length, useSIMD);
+			decryptedContent2 = forDecrypting2.DecryptBytes(encryptedContent2, encryptedContent2.Length, useSIMD);
 
-			encryptedContent3 = forEncrypting3.EncryptBytes(randomContent);
-			decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3);
+			encryptedContent3 = forEncrypting3.EncryptBytes(randomContent, useSIMD);
+			decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(randomContent, decryptedContent1);
@@ -416,7 +428,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void TestStreamEncryptDecrypt()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestStreamEncryptDecrypt(bool useSIMD)
 		{
 			// Arrange
 			Random rng = new Random(Seed: 1339);
@@ -439,8 +453,8 @@ namespace Tests
 			forEncrypting1 = new AES_CTR(key, initialCounter);
 			forDecrypting1 = new AES_CTR(key, initialCounter);
 
-			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
-			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
+			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent), useSIMD: useSIMD);
+			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(randomContent, decryptedContent1);
@@ -448,7 +462,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void TestStreamEncryptDecryptNonPowerOfTwo()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestStreamEncryptDecryptNonPowerOfTwo(bool useSIMD)
 		{
 			// Arrange
 			Random rng = new Random(Seed: 1339);
@@ -471,8 +487,8 @@ namespace Tests
 			forEncrypting1 = new AES_CTR(key, initialCounter);
 			forDecrypting1 = new AES_CTR(key, initialCounter);
 
-			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
-			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
+			forEncrypting1.EncryptStream(new MemoryStream(encryptedContent1), new MemoryStream(randomContent), useSIMD: useSIMD);
+			forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(randomContent, decryptedContent1);
@@ -480,7 +496,9 @@ namespace Tests
 		}
 
 		[Test]
-		public async Task AsyncTestStreamEncryptDecrypt()
+		[TestCase(true)]
+		[TestCase(false)]
+		public async Task AsyncTestStreamEncryptDecrypt(bool useSIMD)
 		{
 			// Arrange
 			Random rng = new Random(Seed: 1339);
@@ -503,8 +521,8 @@ namespace Tests
 			forEncrypting1 = new AES_CTR(key, initialCounter);
 			forDecrypting1 = new AES_CTR(key, initialCounter);
 
-			await forEncrypting1.EncryptStreamAsync(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
-			await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
+			await forEncrypting1.EncryptStreamAsync(new MemoryStream(encryptedContent1), new MemoryStream(randomContent), useSIMD: useSIMD);
+			await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(randomContent, decryptedContent1);
@@ -512,7 +530,9 @@ namespace Tests
 		}
 
 		[Test]
-		public async Task AsyncTestStreamEncryptDecryptNonPowerOfTwo()
+		[TestCase(true)]
+		[TestCase(false)]
+		public async Task AsyncTestStreamEncryptDecryptNonPowerOfTwo(bool useSIMD)
 		{
 			// Arrange
 			Random rng = new Random(Seed: 1339);
@@ -535,8 +555,8 @@ namespace Tests
 			forEncrypting1 = new AES_CTR(key, initialCounter);
 			forDecrypting1 = new AES_CTR(key, initialCounter);
 
-			await forEncrypting1.EncryptStreamAsync(new MemoryStream(encryptedContent1), new MemoryStream(randomContent));
-			await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1));
+			await forEncrypting1.EncryptStreamAsync(new MemoryStream(encryptedContent1), new MemoryStream(randomContent), useSIMD: useSIMD);
+			await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(randomContent, decryptedContent1);
@@ -544,7 +564,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void TestStringToUTF8BytesAndBack()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestStringToUTF8BytesAndBack(bool useSIMD)
 		{
 			// Arrange
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
@@ -556,15 +578,17 @@ namespace Tests
 			AES_CTR forDecrypting1 = new AES_CTR(key, initialCounter);
 
 			// Act
-			byte[] encryptedContent = forEncrypting1.EncryptString(testContent);
-			string decryptedString = forDecrypting1.DecryptUTF8ByteArray(encryptedContent);
+			byte[] encryptedContent = forEncrypting1.EncryptString(testContent, useSIMD);
+			string decryptedString = forDecrypting1.DecryptUTF8ByteArray(encryptedContent, useSIMD);
 
 			// Assert
 			Assert.AreEqual(testContent, decryptedString);
 		}
 
 		[Test]
-		public void TestLittleEndianRoundtrip()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestLittleEndianRoundtrip(bool useSIMD)
 		{
 			// Arrange
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
@@ -576,15 +600,17 @@ namespace Tests
 			AES_CTR forDecryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
 
 			// Act
-			byte[] encryptedContentLittle = forEncryptingLittle.EncryptString(testContent);
-			string decryptedStringLittle = forDecryptingLittle.DecryptUTF8ByteArray(encryptedContentLittle);
+			byte[] encryptedContentLittle = forEncryptingLittle.EncryptString(testContent, useSIMD);
+			string decryptedStringLittle = forDecryptingLittle.DecryptUTF8ByteArray(encryptedContentLittle, useSIMD);
 
 			// Assert
 			Assert.AreEqual(testContent, decryptedStringLittle);
 		}
 
 		[Test]
-		public void TestLittleEndianProduceDifferentResults()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestLittleEndianProduceDifferentResults(bool useSIMD)
 		{
 			// Arrange
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
@@ -600,11 +626,11 @@ namespace Tests
 			AES_CTR forDecryptingLittle = new AES_CTR(key, initialCounterLittle, littleEndian: true);
 
 			// Act
-			byte[] encryptedContentBig = forEncryptingBig.EncryptBytes(input);
-			byte[] decryptedContentBig = forDecryptingBig.DecryptBytes(encryptedContentBig);
+			byte[] encryptedContentBig = forEncryptingBig.EncryptBytes(input, useSIMD);
+			byte[] decryptedContentBig = forDecryptingBig.DecryptBytes(encryptedContentBig, useSIMD);
 
-			byte[] encryptedContentLittle = forEncryptingLittle.EncryptBytes(input);
-			byte[] decryptedContentLittle = forDecryptingLittle.DecryptBytes(encryptedContentLittle);
+			byte[] encryptedContentLittle = forEncryptingLittle.EncryptBytes(input, useSIMD);
+			byte[] decryptedContentLittle = forDecryptingLittle.DecryptBytes(encryptedContentLittle, useSIMD);
 
 			// Assert
 			CollectionAssert.AreEqual(input, decryptedContentBig);
@@ -614,7 +640,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void TestDisposable()
+		[TestCase(true)]
+		[TestCase(false)]
+		public void TestDisposable(bool useSIMD)
 		{
 			// Arrange
 			byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
@@ -629,12 +657,12 @@ namespace Tests
 			// Act
 			using (AES_CTR forEncrypting = new AES_CTR(key, initialCounter))
 			{
-				forEncrypting.EncryptBytes(encrypted, content, contentLength);
+				forEncrypting.EncryptBytes(encrypted, content, contentLength, useSIMD);
 			}
 
 			using (AES_CTR forDecrypting = new AES_CTR(key, initialCounter))
 			{
-				forDecrypting.DecryptBytes(decrypted, encrypted, contentLength);
+				forDecrypting.DecryptBytes(decrypted, encrypted, contentLength, useSIMD);
 			}
 
 			// Assert
