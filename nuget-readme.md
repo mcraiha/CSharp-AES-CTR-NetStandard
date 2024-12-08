@@ -1,6 +1,6 @@
 ## About
 
-Managed .Net (Standard 2.0, .NET 6 and .NET 8) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [Aes.Create](hhttps://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes.create?view=net-8.0#system-security-cryptography-aes-create) for AES operations)
+Managed .Net (.NET 8) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [Aes.Create](hhttps://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes.create?view=net-8.0#system-security-cryptography-aes-create) for AES operations)
 
 ## How to use
 

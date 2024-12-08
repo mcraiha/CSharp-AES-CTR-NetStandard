@@ -1,6 +1,6 @@
 # CSharp-AES-CTR-NetStandard
 
-Managed .Net Standard 2.0 compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [AesManaged](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesmanaged?view=netstandard-2.0) for AES operations)
+Managed .Net 8 compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [AesManaged](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesmanaged?view=netstandard-2.0) for AES operations)
 
 ## GitHub
 [CSharp-AES-CTR-NetStandard](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard)
