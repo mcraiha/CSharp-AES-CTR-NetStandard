@@ -1,6 +1,6 @@
 ## About
 
-Managed .Net (.NET 8) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [Aes.Create](hhttps://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes.create?view=net-8.0#system-security-cryptography-aes-create) for AES operations)
+Managed .Net (.NET 8 and .NET 10) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [Aes.Create](hhttps://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes.create?view=net-8.0#system-security-cryptography-aes-create) for AES operations)
 
 ## How to use
 
@@ -14,7 +14,7 @@ byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 
 byte[] initialCounter = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05 };
 
 // Encrypt
-AES_CTR forEncrypting = new AES_CTR(key, initialCounter);			
+AES_CTR forEncrypting = new AES_CTR(key, initialCounter);
 byte[] encryptedContent = new byte[mySimpleTextAsBytes.Length];
 forEncrypting.EncryptBytes(encryptedContent, mySimpleTextAsBytes);
 
