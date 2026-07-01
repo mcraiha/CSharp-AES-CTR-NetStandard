@@ -61,15 +61,15 @@ public class ValidityTests
 		aesCtrDifferentConstructor.EncryptBytes(actualOutput4DifferentConstructor, bytesToEncrypt4, bytesToEncrypt4.Length);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+		Assert.That(actualOutput1, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4, Is.EqualTo(expectedOutput4));
 
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1DifferentConstructor);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2DifferentConstructor);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3DifferentConstructor);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4DifferentConstructor);
+		Assert.That(actualOutput1DifferentConstructor, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2DifferentConstructor, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3DifferentConstructor, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4DifferentConstructor, Is.EqualTo(expectedOutput4));
 	}
 
 	[Test]
@@ -107,10 +107,10 @@ public class ValidityTests
 		aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+		Assert.That(actualOutput1, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4, Is.EqualTo(expectedOutput4));
 	}
 
 	[Test]
@@ -148,10 +148,10 @@ public class ValidityTests
 		aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+		Assert.That(actualOutput1, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4, Is.EqualTo(expectedOutput4));
 	}
 
 	[Test]
@@ -189,10 +189,10 @@ public class ValidityTests
 		aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+		Assert.That(actualOutput1, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4, Is.EqualTo(expectedOutput4));
 	}
 
 	[Test]
@@ -230,10 +230,10 @@ public class ValidityTests
 		aesCtr.EncryptBytes(actualOutput4, bytesToEncrypt4, bytesToEncrypt4.Length, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+		Assert.That(actualOutput1, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4, Is.EqualTo(expectedOutput4));
 	}
 
 	[Test]
@@ -271,10 +271,10 @@ public class ValidityTests
 		aesCtr.DecryptBytes(actualOutput4, bytesToDecrypt4, bytesToDecrypt4.Length, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput1, actualOutput1);
-		CollectionAssert.AreEqual(expectedOutput2, actualOutput2);
-		CollectionAssert.AreEqual(expectedOutput3, actualOutput3);
-		CollectionAssert.AreEqual(expectedOutput4, actualOutput4);
+		Assert.That(actualOutput1, Is.EqualTo(expectedOutput1));
+		Assert.That(actualOutput2, Is.EqualTo(expectedOutput2));
+		Assert.That(actualOutput3, Is.EqualTo(expectedOutput3));
+		Assert.That(actualOutput4, Is.EqualTo(expectedOutput4));
 	}
 
 	[Test]
@@ -295,7 +295,7 @@ public class ValidityTests
 		aesCtr.EncryptBytes(actualOutput, bytesToEncrypt, bytesToEncrypt.Length, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(expectedOutput, actualOutput);
+		Assert.That(actualOutput, Is.EqualTo(expectedOutput));
 	}
 
 	[Test]
@@ -352,14 +352,14 @@ public class ValidityTests
 		decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(randomContent, decryptedContent1);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		Assert.That(decryptedContent1, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent1, Is.Not.EqualTo(randomContent));
 
-		CollectionAssert.AreEqual(randomContent, decryptedContent2);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent2);
+		Assert.That(decryptedContent2, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent2, Is.Not.EqualTo(randomContent));
 
-		CollectionAssert.AreEqual(randomContent, decryptedContent3);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent3);
+		Assert.That(decryptedContent3, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent3, Is.Not.EqualTo(randomContent));
 	}
 
 	[Test]
@@ -416,14 +416,14 @@ public class ValidityTests
 		decryptedContent3 = forDecrypting3.DecryptBytes(encryptedContent3, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(randomContent, decryptedContent1);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		Assert.That(decryptedContent1, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent1, Is.Not.EqualTo(randomContent));
 
-		CollectionAssert.AreEqual(randomContent, decryptedContent2);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent2);
+		Assert.That(decryptedContent2, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent2, Is.Not.EqualTo(randomContent));
 
-		CollectionAssert.AreEqual(randomContent, decryptedContent3);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent3);
+		Assert.That(decryptedContent3, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent3, Is.Not.EqualTo(randomContent));
 	}
 
 	[Test]
@@ -456,8 +456,8 @@ public class ValidityTests
 		forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(randomContent, decryptedContent1);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		Assert.That(decryptedContent1, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent1, Is.Not.EqualTo(randomContent));
 	}
 
 	[Test]
@@ -490,8 +490,8 @@ public class ValidityTests
 		forDecrypting1.DecryptStream(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(randomContent, decryptedContent1);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		Assert.That(decryptedContent1, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent1, Is.Not.EqualTo(randomContent));
 	}
 
 	[Test]
@@ -524,8 +524,8 @@ public class ValidityTests
 		await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(randomContent, decryptedContent1);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		Assert.That(decryptedContent1, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent1, Is.Not.EqualTo(randomContent));
 	}
 
 	[Test]
@@ -558,8 +558,8 @@ public class ValidityTests
 		await forDecrypting1.DecryptStreamAsync(new MemoryStream(decryptedContent1), new MemoryStream(encryptedContent1), useSIMD: useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(randomContent, decryptedContent1);
-		CollectionAssert.AreNotEqual(randomContent, encryptedContent1);
+		Assert.That(decryptedContent1, Is.EqualTo(randomContent));
+		Assert.That(encryptedContent1, Is.Not.EqualTo(randomContent));
 	}
 
 	[Test]
@@ -632,10 +632,10 @@ public class ValidityTests
 		byte[] decryptedContentLittle = forDecryptingLittle.DecryptBytes(encryptedContentLittle, useSIMD);
 
 		// Assert
-		CollectionAssert.AreEqual(input, decryptedContentBig);
-		CollectionAssert.AreEqual(input, decryptedContentLittle);
-		CollectionAssert.AreEqual(encryptedContentBig.Take(16), encryptedContentLittle.Take(16), "First 16 bytes should be equal");
-		CollectionAssert.AreNotEqual(encryptedContentBig.Skip(16).Take(16), encryptedContentLittle.Skip(16).Take(16), "Last 16 bytes should not be equal since counter byte array increases from different positions");
+		Assert.That(decryptedContentBig, Is.EqualTo(input));
+		Assert.That(decryptedContentLittle, Is.EqualTo(input));
+		Assert.That(encryptedContentLittle.Take(16), Is.EqualTo(encryptedContentBig.Take(16)), "First 16 bytes should be equal");
+		Assert.That(encryptedContentLittle.Skip(16).Take(16), Is.Not.EqualTo(encryptedContentBig.Skip(16).Take(16)), "Last 16 bytes should not be equal since counter byte array increases from different positions");
 	}
 
 	[Test]
@@ -665,6 +665,6 @@ public class ValidityTests
 		}
 
 		// Assert
-		CollectionAssert.AreEqual(content, decrypted);
+		Assert.That(decrypted, Is.EqualTo(content));
 	}
 }
