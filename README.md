@@ -13,7 +13,7 @@ Because I needed this for my personal project
 
 ## Older versions
 
-YOu can find OLD .NET Standard and .NET 6 compatible version from [older branch](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/tree/netstandard20andnet6)
+You can find OLD .NET Standard and .NET 6 compatible version from [older branch](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/tree/netstandard20andnet6)
 
 ## Documentation
 
