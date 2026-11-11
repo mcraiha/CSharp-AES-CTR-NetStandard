@@ -1,6 +1,6 @@
 # CSharp-AES-CTR-NetStandard
 
-Managed .Net (.NET 8 and .NET 10) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [Aes.Create](hhttps://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes.create?view=net-8.0#system-security-cryptography-aes-create) for AES operations)
+Managed .Net (.NET 10 and .NET 11) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [Aes.Create](hhttps://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes.create?view=net-8.0#system-security-cryptography-aes-create) for AES operations)
 
 ## Build status
 
@@ -14,6 +14,7 @@ Because I needed this for my personal project
 ## Older versions
 
 You can find OLD .NET Standard and .NET 6 compatible version from [older branch](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/tree/netstandard20andnet6)
+You can find OLD .NET 8 compatible version from [older branch](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard/tree/net8)
 
 ## Documentation
 
