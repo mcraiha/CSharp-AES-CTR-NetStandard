@@ -1,14 +1,17 @@
 # CSharp-AES-CTR-NetStandard
 
-Managed .Net 8 compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [AesManaged](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesmanaged?view=netstandard-2.0) for AES operations)
+Managed .Net (.NET 10 and .NET 11) compatible [AES-CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) cipher written in C# (using [AesManaged](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesmanaged?view=netstandard-2.0) for AES operations)
 
 ## GitHub
+
 [CSharp-AES-CTR-NetStandard](https://github.com/mcraiha/CSharp-AES-CTR-NetStandard)
 
 ## Documentation
+
 [Documentation](api/) 
 
 ## How do I use this?
+
 Either copy the [CSAES-CTR.cs](src/CSAES-CTR.cs) to your project or use [LibAES-CTR](https://www.nuget.org/packages/LibAES-CTR/) nuget package
 
 Then do code like
